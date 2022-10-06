@@ -7,5 +7,7 @@ import ar.edu.unju.fi.poo.tp7.entity.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+	
+	Cliente findByDni(Integer dni);
 
 }

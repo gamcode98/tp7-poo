@@ -7,5 +7,7 @@ import ar.edu.unju.fi.poo.tp7.entity.Cuenta;
 
 @Repository
 public interface CuentaRepository extends JpaRepository<Cuenta, Long>{
-
+	
+	Cuenta findByNroCuenta(Integer nroCuenta);
+	
 }

@@ -2,19 +2,26 @@ package ar.edu.unju.fi.poo.tp7.entity;
 
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 @Entity
+@Table(name = "clientes")
 public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
 	
 	@Column(name = "dni")
@@ -32,12 +39,16 @@ public class Cliente {
 	@Column(name = "estado")
 	private String estado;
 	
-	@ManyToOne
-	@JoinColumn(name = "adherentes")
-	private Cliente adherentes;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "adherentes")	
+	private List<Cliente> adherentes;
+	
+	public Cliente() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Cliente(Integer dni, String nombre, String email, String domicilio, String estado,
-			Cliente adherentes) {
+			List<Cliente> adherentes) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
@@ -45,6 +56,14 @@ public class Cliente {
 		this.domicilio = domicilio;
 		this.estado = estado;
 		this.adherentes = adherentes;
+	}	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Integer getDni() {
@@ -87,11 +106,11 @@ public class Cliente {
 		this.estado = estado;
 	}
 
-	public Cliente getAdherentes() {
+	public List<Cliente> getAdherentes() {
 		return adherentes;
 	}
 
-	public void setAdherentes(Cliente adherentes) {
+	public void setAdherentes(List<Cliente> adherentes) {
 		this.adherentes = adherentes;
 	}
 
@@ -100,7 +119,6 @@ public class Cliente {
 		return "Cliente [dni=" + dni + ", nombre=" + nombre + ", email=" + email + ", domicilio=" + domicilio
 				+ ", estado=" + estado + ", adherentes=" + adherentes + "]";
 	}
-	
 	
 
 }

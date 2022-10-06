@@ -7,12 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Operacion {
+@Table(name = "movimientos")
+public class Movimiento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long id;
 	
 	@Column(name = "fecha_movimiento")
@@ -23,12 +27,24 @@ public class Operacion {
 	
 	@Column(name = "importe")
 	private Double importe;
+	
+	@ManyToOne
+	private Cuenta cuenta;
 
-	public Operacion(LocalDate fechaMovimiento, String tipoMovimiento, Double importe) {
+	public Movimiento(LocalDate fechaMovimiento, String tipoMovimiento, Double importe, Cuenta cuenta) {
 		super();
 		this.fechaMovimiento = fechaMovimiento;
 		this.tipoMovimiento = tipoMovimiento;
 		this.importe = importe;
+		this.cuenta = cuenta;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDate getFechaMovimiento() {
@@ -55,12 +71,19 @@ public class Operacion {
 		this.importe = importe;
 	}
 
-	@Override
-	public String toString() {
-		return "Operacion [fechaMovimiento=" + fechaMovimiento + ", tipoMovimiento=" + tipoMovimiento + ", importe="
-				+ importe + "]";
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
 	}
 	
-	
+
+	@Override
+	public String toString() {
+		return "Movimiento [id=" + id + ", fechaMovimiento=" + fechaMovimiento + ", tipoMovimiento=" + tipoMovimiento
+				+ ", importe=" + importe + ", cuenta=" + cuenta + "]";
+	}
 	
 }
